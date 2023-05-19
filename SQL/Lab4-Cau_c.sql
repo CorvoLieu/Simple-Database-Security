@@ -1,0 +1,38 @@
+﻿/*----------------------------------------------------------
+MASV:20127451 - 20127492 - 20127626
+HO TEN CAC THANH VIEN NHOM: Nguyen Nhat Canh - Lieu Gia Hao - To Duy Thai
+LAB: 03 - NHOM 4
+NGAY: 13/4/2023
+----------------------------------------------------------*/
+
+--DROP PROCEDURE SP_INS_PUBLIC_NHANVIEN
+--GO
+
+
+--Stored dùng để thêm mới dữ liệu (Insert) vào table SINHVIEN
+CREATE PROCEDURE SP_INS_PUBLIC_ENCRYPT_NHANVIEN 
+	@MANV NVARCHAR(20), 
+	@HOTEN NVARCHAR(100), 
+	@EMAIL VARCHAR(20), 
+	@LUONGCB VARBINARY(64), 
+	@TENDN NVARCHAR(100), 
+	@MATKHAU VARBINARY(64),
+	@PUB VARCHAR(20)
+AS
+BEGIN
+	--											  RSA			  SHA1
+	INSERT NHANVIEN VALUES(@MANV, @HOTEN, @EMAIL, @LUONG, @TENDN, @MATKHAU, @PUBKEY)
+END
+GO
+
+-- Stored dùng để truy vấn dữ liệu nhân viên (NHANVIEN)
+CREATE PROCEDURE SP_SEL_PUBLIC_ENCRYPT_NHANVIEN 
+	@TENDN NVARCHAR(100),  
+	@MATKHAU VARBINARY(64)
+AS
+BEGIN
+	SELECT *
+	FROM NHANVIEN AS NV
+	WHERE NV.TENDN = @TENDN AND NV.MATKHAU = @MATKHAU
+END
+GO
